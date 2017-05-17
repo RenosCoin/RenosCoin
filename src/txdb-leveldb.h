@@ -81,7 +81,7 @@ protected:
                 if (status.IsNotFound())
                     return false;
                 // Some unexpected error.
-                printf("LevelDB read failure: %s\n", status.ToString().c_str());
+                LogPrintf("LevelDB read failure: %s\n", status.ToString());
                 return false;
             }
         }
@@ -116,7 +116,7 @@ protected:
         }
         leveldb::Status status = pdb->Put(leveldb::WriteOptions(), ssKey.str(), ssValue.str());
         if (!status.ok()) {
-            printf("LevelDB write failure: %s\n", status.ToString().c_str());
+            LogPrintf("LevelDB write failure: %s\n", status.ToString());
             return false;
         }
         return true;
@@ -183,6 +183,8 @@ public:
         return Write(std::string("version"), nVersion);
     }
 
+    bool ReadAddrIndex(uint160 addrHash, std::vector<uint256>& txHashes);
+    bool WriteAddrIndex(uint160 addrHash, uint256 txHash);
     bool ReadTxIndex(uint256 hash, CTxIndex& txindex);
     bool UpdateTxIndex(uint256 hash, const CTxIndex& txindex);
     bool AddTxIndex(const CTransaction& tx, const CDiskTxPos& pos, int nHeight);

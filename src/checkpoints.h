@@ -8,8 +8,6 @@
 #include "net.h"
 #include "util.h"
 
-#define CHECKPOINT_MAX_SPAN (60 * 60) // max 1 hour before latest block
-
 #ifdef WIN32
 #undef STRICT
 #undef PERMISSIVE
@@ -60,7 +58,6 @@ namespace Checkpoints
     void AskForPendingSyncCheckpoint(CNode* pfrom);
     bool SetCheckpointPrivKey(std::string strPrivKey);
     bool SendSyncCheckpoint(uint256 hashCheckpoint);
-    bool IsMatureSyncCheckpoint();
 }
 
 // ppcoin: synchronized checkpoint
@@ -91,12 +88,7 @@ public:
                 "    hashCheckpoint = %s\n"
                 ")\n",
             nVersion,
-            hashCheckpoint.ToString().c_str());
-    }
-
-    void print() const
-    {
-        printf("%s", ToString().c_str());
+            hashCheckpoint.ToString());
     }
 };
 
@@ -137,18 +129,7 @@ public:
         return SerializeHash(*this);
     }
 
-    bool RelayTo(CNode* pnode) const
-    {
-        // returns true if wasn't already sent
-        if (pnode->hashCheckpointKnown != hashCheckpoint)
-        {
-            pnode->hashCheckpointKnown = hashCheckpoint;
-            pnode->PushMessage("checkpoint", *this);
-            return true;
-        }
-        return false;
-    }
-
+    bool RelayTo(CNode* pnode) const;
     bool CheckSignature();
     bool ProcessSyncCheckpoint(CNode* pfrom);
 };

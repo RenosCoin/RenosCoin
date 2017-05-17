@@ -1,9 +1,0 @@
-Building RenosCoin
-
-See doc/readme-qt.rst for instructions on building RenosCoin QT,
-the intended-for-end-users, nice-graphical-interface, reference
-implementation of RenosCoin.
-
-See doc/build-*.txt for instructions on building renoscoind,
-the intended-for-services, no-graphical-interface, reference
-implementation of RenosCoin.
