@@ -91,11 +91,12 @@ public:
 
        
 		/*vSeeds.push_back(CDNSSeedData("seed1", "host.blockexplorer.pro"));*/
-		vSeeds.push_back(CDNSSeedData("seed1", "45.32.152.95"));
+		//vSeeds.push_back(CDNSSeedData("seed1", "45.32.152.95"));
 		//vSeeds.push_back(CDNSSeedData("seed3", "45.76.42.66"));
 		//vSeeds.push_back(CDNSSeedData("seed4", "108.61.188.124"));
-        vSeeds.push_back(CDNSSeedData("seed2", "45.76.37.221"));
-        vSeeds.push_back(CDNSSeedData("seed3", "45.32.196.193"));
+        vSeeds.push_back(CDNSSeedData("seed1", "45.76.37.221"));
+        vSeeds.push_back(CDNSSeedData("seed2", "45.32.196.193"));
+        vSeeds.push_back(CDNSSeedData("seed3", "71.8.221.118"));
 
 		
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,60);
