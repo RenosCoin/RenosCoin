@@ -18,7 +18,7 @@ Port: 57155
 RPC Port: 57154
 
 
-BUILD LINUX
+BUILD LINUX (see the [Wiki](https://github.com/RenosCoin/RenosCoin/wiki/Unix-Build) for dependencies)
 -----------
 1) git clone https://github.com/RenosCoin/RenosCoin.git RenosCoin
 
