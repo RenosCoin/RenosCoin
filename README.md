@@ -6,7 +6,7 @@ Renos uses libsecp256k1,
 			  libgmp,
 			  Boost1.55,
 			  OR Boost1.57,  
-			  Openssl1.01p,
+			  Openssl1.01m,
 			  Berkeley DB 4.8,
 			  QT5 to compile
 
