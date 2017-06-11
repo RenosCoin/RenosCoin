@@ -38,7 +38,7 @@ BUILD LINUX
 BUILD WINDOWS
 -------------
 
-1) Download Qt.zip from https://github.com/transferdev/Transfercoin/releases/tag/1.2.3B and unpack to C:/
+1) Download Qt.zip from https://github.com/RenosCoin/RenosCoin/releases/tag/1.0 and unpack to C:/
 
 2) Download RenosCoin source from https://github.com/RenosCoin/RenosCoin/archive/master.zip 
 
