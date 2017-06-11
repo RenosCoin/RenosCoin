@@ -1,4 +1,4 @@
-#RenosCoin
+# RenosCoin
 
 Renos is a PoS-based cryptocurrency.
 
