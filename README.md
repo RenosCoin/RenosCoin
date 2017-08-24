@@ -24,7 +24,7 @@ BUILD LINUX (see the [Wiki](https://github.com/RenosCoin/RenosCoin/wiki/Unix-Bui
 
 2) cd RenosCoin/src
 
-3) sudo make -f makefile.unix            # Headless renos
+3) sudo make -f makefile.unix USE_UPNP=- # Headless renos
 
 (optional)
 
