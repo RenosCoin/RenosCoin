@@ -9,7 +9,7 @@
 #include "guiutil.h"
 
 #ifdef USE_QRCODE
-#include "qrcodedialog.h"
+	#include "qrcodedialog.h"
 #endif
 
 #include <QSortFilterProxyModel>
@@ -66,11 +66,6 @@ AddressBookPage::AddressBookPage(Mode mode, Tabs tab, QWidget *parent) :
     QAction *copyAddressAction = new QAction(ui->copyToClipboard->text(), this);
     QAction *editAction = new QAction(tr("&Edit"), this);
 
-/*	#ifdef USE_QRCODE
-    // Context menu actions
-    QAction *showQRCodeAction = new QAction(ui->showQRCode->text(), this);
-	#endif
-*/
     QAction *signMessageAction = new QAction(ui->signMessage->text(), this);
     QAction *verifyMessageAction = new QAction(ui->verifyMessage->text(), this);
     deleteAction = new QAction(ui->deleteButton->text(), this);
@@ -83,12 +78,6 @@ AddressBookPage::AddressBookPage(Mode mode, Tabs tab, QWidget *parent) :
     if(tab == SendingTab)
         contextMenu->addAction(deleteAction);
     contextMenu->addSeparator();
-/*
-	#ifdef USE_QRCODE
-       // Build context menu
-    contextMenu->addAction(showQRCodeAction);
-	#endif
-*/
 
     if(tab == ReceivingTab)
         contextMenu->addAction(signMessageAction);
