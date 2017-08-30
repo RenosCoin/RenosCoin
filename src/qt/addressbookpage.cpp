@@ -66,10 +66,11 @@ AddressBookPage::AddressBookPage(Mode mode, Tabs tab, QWidget *parent) :
     QAction *copyAddressAction = new QAction(ui->copyToClipboard->text(), this);
     QAction *editAction = new QAction(tr("&Edit"), this);
 
-	#ifdef USE_QRCODE
-		QAction *showQRCodeAction = new QAction(ui->showQRCode->text(), this);
+/*	#ifdef USE_QRCODE
+    // Context menu actions
+    QAction *showQRCodeAction = new QAction(ui->showQRCode->text(), this);
 	#endif
-
+*/
     QAction *signMessageAction = new QAction(ui->signMessage->text(), this);
     QAction *verifyMessageAction = new QAction(ui->verifyMessage->text(), this);
     deleteAction = new QAction(ui->deleteButton->text(), this);
@@ -82,11 +83,12 @@ AddressBookPage::AddressBookPage(Mode mode, Tabs tab, QWidget *parent) :
     if(tab == SendingTab)
         contextMenu->addAction(deleteAction);
     contextMenu->addSeparator();
-
+/*
 	#ifdef USE_QRCODE
-		contextMenu->addAction(showQRCodeAction);
+       // Build context menu
+    contextMenu->addAction(showQRCodeAction);
 	#endif
-
+*/
 
     if(tab == ReceivingTab)
         contextMenu->addAction(signMessageAction);
@@ -100,7 +102,7 @@ AddressBookPage::AddressBookPage(Mode mode, Tabs tab, QWidget *parent) :
     connect(deleteAction, SIGNAL(triggered()), this, SLOT(on_deleteButton_clicked()));
 
 	#ifdef USE_QRCODE
-    	connect(showQRCodeAction, SIGNAL(triggered()), this, SLOT(on_showQRCode_clicked()));
+      	addQrCodeGuiElements();
 	#endif
 
     connect(signMessageAction, SIGNAL(triggered()), this, SLOT(on_signMessage_clicked()));
@@ -110,6 +112,16 @@ AddressBookPage::AddressBookPage(Mode mode, Tabs tab, QWidget *parent) :
 
     // Pass through accept action from button box
     connect(ui->buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
+}
+
+void AddressBookPage::addQrCodeGuiElements()
+{
+	// Context menu actions
+	QAction *showQRCodeAction = new QAction(ui->showQRCode->text(), this);
+	// Build context menu
+	contextMenu->addAction(showQRCodeAction);
+	// Connect signals for context menu actions
+	connect(showQRCodeAction, SIGNAL(triggered()), this, SLOT(on_showQRCode_clicked()));
 }
 
 AddressBookPage::~AddressBookPage()
