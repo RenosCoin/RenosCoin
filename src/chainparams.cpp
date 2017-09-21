@@ -86,7 +86,8 @@ public:
         assert(hashGenesisBlock == uint256("0x00000e590857f6bf83e3ae07b56528e47565115465f9d4e8ead2c5bffb1a9edc"));
         assert(genesis.hashMerkleRoot == uint256("0xb43b9c01703081ea07d54e271471e7100364535cf55e38763761e384d27970af"));
 
-        vSeeds.push_back(CDNSSeedData("renoscoin.com", "seed.renoscoin.com"));
+        vSeeds.push_back(CDNSSeedData("seed.renoscoin.com", "seed.renoscoin.com"));
+        vSeeds.push_back(CDNSSeedData("seed.renos.network", "seed.renos.network"));
 
 		
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,60);
