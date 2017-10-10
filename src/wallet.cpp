@@ -1372,16 +1372,15 @@ int64_t CWallet::GetUnconfirmedBalance() const
     return nTotal;
 }
 
-int64_t CWallet::GetImmatureBalance() const
+CAmount CWallet::GetImmatureBalance() const
 {
-    int64_t nTotal = 0;
+    CAmount nTotal = 0;
     {
         LOCK2(cs_main, cs_wallet);
         for (map<uint256, CWalletTx>::const_iterator it = mapWallet.begin(); it != mapWallet.end(); ++it)
         {
-            const CWalletTx& pcoin = (*it).second;
-            if (pcoin.IsCoinBase() && pcoin.GetBlocksToMaturity() > 0 && pcoin.IsInMainChain())
-                nTotal += GetCredit(pcoin);
+            const CWalletTx* pcoin = &(*it).second;
+            nTotal += pcoin->GetImmatureCredit();
         }
     }
     return nTotal;

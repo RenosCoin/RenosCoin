@@ -814,7 +814,9 @@ public:
         }
 
         return true;
-    }    CAmount GetImmatureCredit(bool fUseCache=true) const
+    }    
+    
+    CAmount GetImmatureCredit(bool fUseCache=true) const
     {
         if (IsCoinBase() && GetBlocksToMaturity() > 0 && IsInMainChain())
         {
