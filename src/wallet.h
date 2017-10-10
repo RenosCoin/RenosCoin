@@ -814,7 +814,21 @@ public:
         }
 
         return true;
+    }    CAmount GetImmatureCredit(bool fUseCache=true) const
+    {
+        if (IsCoinBase() && GetBlocksToMaturity() > 0 && IsInMainChain())
+        {
+            if (fUseCache && fImmatureCreditCached)
+                return nImmatureCreditCached;
+            nImmatureCreditCached = pwallet->GetCredit(*this, ISMINE_SPENDABLE);
+            fImmatureCreditCached = true;
+            return nImmatureCreditCached;
+        }
+
+        return 0;
     }
+
+    
 
     bool WriteToDisk();
 

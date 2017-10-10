@@ -38,7 +38,7 @@
        </property>
        <widget class="QWidget" name="tab">
         <attribute name="title">
-         <string>RenosNodes Network</string>
+         <string>Renodes Network</string>
         </attribute>
         <layout class="QGridLayout" name="gridLayout">
          <item row="1" column="0">
@@ -95,7 +95,7 @@
            <item>
             <widget class="QLabel" name="label_2">
              <property name="text">
-              <string>RenosNodes Node Count:</string>
+              <string>Renodes Count:</string>
              </property>
             </widget>
            </item>
@@ -125,7 +125,7 @@
        </widget>
        <widget class="QWidget" name="tab_2">
         <attribute name="title">
-         <string>My RenosNodes</string>
+         <string>My Renodes</string>
         </attribute>
         <layout class="QGridLayout" name="gridLayout_2">
          <item row="0" column="0">

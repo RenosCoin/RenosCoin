@@ -282,8 +282,8 @@ void BitcoinGUI::createActions()
     addressBookAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_5));
     tabGroup->addAction(addressBookAction);
 
-    masternodeManagerAction = new QAction(QIcon(":/icons/bitcoin"), tr("&RenosNodes"), this);
-    masternodeManagerAction->setToolTip(tr("Show RenosNodes Nodes status and configure your nodes."));
+    masternodeManagerAction = new QAction(QIcon(":/icons/bitcoin"), tr("&Renodes"), this);
+    masternodeManagerAction->setToolTip(tr("Show Renodes status and configure your nodes."));
     masternodeManagerAction->setCheckable(true);
     tabGroup->addAction(masternodeManagerAction);
 

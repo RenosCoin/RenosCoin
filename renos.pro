@@ -1,6 +1,6 @@
 TEMPLATE = app
-TARGET = RenosCoin-qt
-VERSION = 2.0.1.1
+TARGET = RenosCoin-qt-w32
+VERSION = 2.0.1.3
 INCLUDEPATH += src src/json src/qt src/qt/plugins/mrichtexteditor
 DEFINES += ENABLE_WALLET
 DEFINES += BOOST_THREAD_USE_LIB BOOST_SPIRIT_THREADSAFE
@@ -35,8 +35,8 @@ LIBPNG_INCLUDE_PATH=C:/dev/coindeps32/libpng-1.6.16
 LIBPNG_LIB_PATH=C:/dev/coindeps32/libpng-1.6.16/.libs
 QRENCODE_INCLUDE_PATH=C:/dev/coindeps32/qrencode-3.4.4
 QRENCODE_LIB_PATH=C:/dev/coindeps32/qrencode-3.4.4/.libs
-SECP256K1_LIB_PATH=C:/dev/coindeps32/secp256k1/.libs
-SECP256K1_INCLUDE_PATH=C:/dev/coindeps32/secp256k1/include
+SECP256K1_LIB_PATH=C:/dev/coindeps32/secp256k1_r/.libs
+SECP256K1_INCLUDE_PATH=C:/dev/coindeps32/secp256k1_r/include
 #GMP_INCLUDE_PATH=C:/dev/coindeps32/gmp-6.0.0
 #GMP_LIB_PATH=C:/dev/coindeps32/gmp-6.0.0/.libs
 }

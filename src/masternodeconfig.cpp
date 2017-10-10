@@ -10,7 +10,7 @@ void CMasternodeConfig::add(std::string alias, std::string ip, std::string privK
     entries.push_back(cme);
 }
 
-bool CMasternodeConfig::read(std::string& strErr) {
+bool CMasternodeConfig::read(boost::filesystem::path path) {
     boost::filesystem::ifstream streamConfig(GetMasternodeConfigFile());
     if (!streamConfig.good()) {
         return true; // No masternode.conf file is OK
@@ -24,7 +24,7 @@ bool CMasternodeConfig::read(std::string& strErr) {
         std::istringstream iss(line);
         std::string alias, ip, privKey, txHash, outputIndex;
         if (!(iss >> alias >> ip >> privKey >> txHash >> outputIndex)) {
-            strErr = "Could not parse masternode.conf line: " + line;
+            LogPrintf("Could not parse masternode.conf line: %s\n", line.c_str());
             streamConfig.close();
             return false;
         }
@@ -34,6 +34,11 @@ bool CMasternodeConfig::read(std::string& strErr) {
             streamConfig.close();
             return false;
         }*/
+        if (!(CService(ip).IsIPv4() && CService(ip).IsRoutable())) {
+            LogPrintf("Invalid Address detected in masternode.conf: %s (IPV4 ONLY) \n", line.c_str());
+            streamConfig.close();
+            return false;
+        }
 
         add(alias, ip, privKey, txHash, outputIndex);
     }
