@@ -1372,15 +1372,16 @@ int64_t CWallet::GetUnconfirmedBalance() const
     return nTotal;
 }
 
-CAmount CWallet::GetImmatureBalance() const
+int64_t CWallet::GetImmatureBalance() const
 {
     CAmount nTotal = 0;
     {
         LOCK2(cs_main, cs_wallet);
         for (map<uint256, CWalletTx>::const_iterator it = mapWallet.begin(); it != mapWallet.end(); ++it)
         {
-            const CWalletTx* pcoin = &(*it).second;
-            nTotal += pcoin->GetImmatureCredit();
+            const CWalletTx& pcoin = (*it).second;
+            if (pcoin.IsCoinBase() && pcoin.GetBlocksToMaturity() > 0 && pcoin.IsInMainChain())
+                nTotal += GetCredit(pcoin);
         }
     }
     return nTotal;
@@ -1427,11 +1428,11 @@ void CWallet::AvailableCoins(vector<COutput>& vCoins, bool fOnlyConfirmed, const
                 if(coin_type == ONLY_DENOMINATED) {
                     found = IsDenominatedAmount(pcoin->vout[i].nValue);
                 } else if(coin_type == ONLY_NONDENOMINATED) {
-                    found = !(fMasterNode && pcoin->vout[i].nValue == GetMNCollateral(pindexBest->nHeight)*COIN);
+                    found = !(fMasterNode && pcoin->vout[i].nValue == GetMNCollateral()*COIN);
                 } else if (coin_type == ONLY_NONDENOMINATED_NOTMN){
                     if (IsCollateralAmount(pcoin->vout[i].nValue)) continue; // do not use collateral amounts
                     found = !IsDenominatedAmount(pcoin->vout[i].nValue);
-                    if(found && fMasterNode) found = pcoin->vout[i].nValue != GetMNCollateral(pindexBest->nHeight)*COIN; // do not use Hot MN funds
+                    if(found && fMasterNode) found = pcoin->vout[i].nValue != GetMNCollateral()*COIN; // do not use Hot MN funds
                 } else {
                     found = true;
                 }
@@ -1558,7 +1559,7 @@ void CWallet::AvailableCoinsForStaking(vector<COutput>& vCoins, unsigned int nSp
                     found = true;
                     break;
                 }
-                if (pcoin->vout[i].nValue == DARKSEND_COLLATERAL){
+                if (pcoin->vout[i].nValue == GetMNCollateral()*COIN){
 
                     //LogPrintf("CWallet::AvailableCoinsForStaking - Found Masternode collateral.\n");
                     found = true;

@@ -965,7 +965,7 @@ bool CDarkSendPool::IsCollateralValid(const CTransaction& txCollateral){
         return false;
     }
 
-    //collateral transactions are required to pay out DARKSEND_COLLATERAL as a fee to the miners
+    //collateral transactions are required to pay out DARKSEND_FEE as a fee to the miners
     if(nValueIn-nValueOut < DARKSEND_COLLATERAL) {
         if(fDebug) LogPrintf ("CDarkSendPool::IsCollateralValid - did not include enough fees in transaction %d\n%s\n", nValueOut-nValueIn, txCollateral.ToString().c_str());
         return false;
@@ -1985,7 +1985,7 @@ bool CDarkSendSigner::IsVinAssociatedWithPubkey(CTxIn& vin, CPubKey& pubkey){
     //if(GetTransaction(vin.prevout.hash, txVin, hash, true)){
     if(GetTransaction(vin.prevout.hash, txVin, hash)){
         BOOST_FOREACH(CTxOut out, txVin.vout){
-            if(out.nValue == GetMNCollateral(pindexBest->nHeight)*COIN){
+            if(out.nValue == GetMNCollateral()*COIN){
                 if(out.scriptPubKey == payee2) return true;
             }
         }

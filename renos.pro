@@ -1,6 +1,6 @@
 TEMPLATE = app
 TARGET = RenosCoin-qt-w32
-VERSION = 2.0.1.3
+VERSION = 2.1.1.3
 INCLUDEPATH += src src/json src/qt src/qt/plugins/mrichtexteditor
 DEFINES += ENABLE_WALLET
 DEFINES += BOOST_THREAD_USE_LIB BOOST_SPIRIT_THREADSAFE
