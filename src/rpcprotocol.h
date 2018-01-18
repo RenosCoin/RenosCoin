@@ -7,7 +7,7 @@
 #define _BITCOINRPC_PROTOCOL_H_ 1
 
 #include "compat.h"
-
+#include "fs.h"
 #include <list>
 #include <map>
 #include <stdint.h>
@@ -136,5 +136,12 @@ std::string JSONRPCRequest(const std::string& strMethod, const json_spirit::Arra
 json_spirit::Object JSONRPCReplyObj(const json_spirit::Value& result, const json_spirit::Value& error, const json_spirit::Value& id);
 std::string JSONRPCReply(const json_spirit::Value& result, const json_spirit::Value& error, const json_spirit::Value& id);
 json_spirit::Object JSONRPCError(int code, const std::string& message);
+
+/** Generate a new RPC authentication cookie and write it to disk */
+bool GenerateAuthCookie(std::string *cookie_out);
+/** Read the RPC authentication cookie from disk */
+bool GetAuthCookie(std::string *cookie_out);
+/** Delete RPC authentication cookie from disk */
+void DeleteAuthCookie();
 
 #endif

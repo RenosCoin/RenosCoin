@@ -8,7 +8,7 @@
 #include "init.h"
 #include <boost/algorithm/string/predicate.hpp>
 
-void WaitForShutdown(boost::thread_group* threadGroup)
+void WaitForShutdown(boost::thread_group *threadGroup)
 {
     bool fShutdown = ShutdownRequested();
     // Tell the main threads to shutdown.
@@ -28,40 +28,51 @@ void WaitForShutdown(boost::thread_group* threadGroup)
 //
 // Start
 //
-bool AppInit(int argc, char* argv[])
+bool AppInit(int argc, char *argv[])
 {
     boost::thread_group threadGroup;
 
     bool fRet = false;
+    //
+    // Parameters
+    //
+    // If Qt is used, parameters/bitcoin.conf are parsed in qt/bitcoin.cpp's main()
+    ParseParameters(argc, argv);
+
+    if (mapArgs.count("-?") || mapArgs.count("--help") || mapArgs.count("-version"))
+    {
+
+        std::string strUsage = strprintf(_("%s Daemon"), _("RenosCoin")) + " " + _("version") + " " + FormatFullVersion();
+
+        if (mapArgs.count("-version"))
+        {
+            //strUsage += FormatParagraph(LicenseInfo());
+        }
+        else
+        {
+            // First part of help message is specific to bitcoind / RPC client
+            std::string strUsage = _("RenosCoin version") + " " + FormatFullVersion() + "\n\n" +
+                                   _("Usage:") + "\n" +
+                                   "  renosd [options]                     " + "\n" +
+                                   "  renosd [options] <command> [params]  " + _("Send command to -server or renosd") + "\n" +
+                                   "  renosd [options] help                " + _("List commands") + "\n" +
+                                   "  renosd [options] help <command>      " + _("Get help for a command") + "\n";
+
+            strUsage += "\n" + HelpMessage();
+        }
+
+        fprintf(stdout, "%s", strUsage.c_str());
+        return true;
+    }
+    
     try
     {
-        //
-        // Parameters
-        //
-        // If Qt is used, parameters/bitcoin.conf are parsed in qt/bitcoin.cpp's main()
-        ParseParameters(argc, argv);
         if (!boost::filesystem::is_directory(GetDataDir(false)))
         {
             fprintf(stderr, "Error: Specified directory does not exist\n");
             Shutdown();
         }
         ReadConfigFile(mapArgs, mapMultiArgs);
-
-        if (mapArgs.count("-?") || mapArgs.count("--help"))
-        {
-            // First part of help message is specific to bitcoind / RPC client
-            std::string strUsage = _("RenosCoin version") + " " + FormatFullVersion() + "\n\n" +
-                _("Usage:") + "\n" +
-                  "  renosd [options]                     " + "\n" +
-                  "  renosd [options] <command> [params]  " + _("Send command to -server or renosd") + "\n" +
-                  "  renosd [options] help                " + _("List commands") + "\n" +
-                  "  renosd [options] help <command>      " + _("Get help for a command") + "\n";
-
-            strUsage += "\n" + HelpMessage();
-
-            fprintf(stdout, "%s", strUsage.c_str());
-            return false;
-        }
 
         // Command-line RPC
         for (int i = 1; i < argc; i++)
@@ -70,7 +81,8 @@ bool AppInit(int argc, char* argv[])
 
         if (fCommandLine)
         {
-            if (!SelectParamsFromCommandLine()) {
+            if (!SelectParamsFromCommandLine())
+            {
                 fprintf(stderr, "Error: invalid combination of -regtest and -testnet.\n");
                 return false;
             }
@@ -103,9 +115,12 @@ bool AppInit(int argc, char* argv[])
 
         fRet = AppInit2(threadGroup);
     }
-    catch (std::exception& e) {
+    catch (std::exception &e)
+    {
         PrintException(&e, "AppInit()");
-    } catch (...) {
+    }
+    catch (...)
+    {
         PrintException(NULL, "AppInit()");
     }
 
@@ -115,7 +130,9 @@ bool AppInit(int argc, char* argv[])
         // threadGroup.join_all(); was left out intentionally here, because we didn't re-test all of
         // the startup-failure cases to make sure they don't result in a hang due to some
         // thread-blocking-waiting-for-another-thread-during-startup case
-    } else {
+    }
+    else
+    {
         WaitForShutdown(&threadGroup);
     }
     Shutdown();
@@ -124,7 +141,7 @@ bool AppInit(int argc, char* argv[])
 }
 
 extern void noui_connect();
-int main(int argc, char* argv[])
+int main(int argc, char *argv[])
 {
     bool fRet = false;
     fHaveGUI = false;
