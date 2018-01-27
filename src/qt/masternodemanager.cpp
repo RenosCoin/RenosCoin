@@ -181,15 +181,6 @@ void MasternodeManager::updateNodeList()
     }
 
     ui->countLabel->setText(QString::number(ui->tableWidget->rowCount()));
-
-    if(pwalletMain)
-    {
-        LOCK(cs_adrenaline);
-        BOOST_FOREACH(PAIRTYPE(std::string, CAdrenalineNodeConfig) adrenaline, pwalletMain->mapMyAdrenalineNodes)
-        {
-            updateAdrenalineNode(QString::fromStdString(adrenaline.second.sAlias), QString::fromStdString(adrenaline.second.sAddress), QString::fromStdString(adrenaline.second.sMasternodePrivKey), QString::fromStdString(adrenaline.second.sCollateralAddress));
-        }
-    }
 }
 
 
