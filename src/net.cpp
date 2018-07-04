@@ -1197,7 +1197,7 @@ void ThreadOpenConnections()
 
     // Initiate network connections
     int64_t nStart = GetTime();
-    while (true)
+    while (!ShutdownRequested())
     {
         ProcessOneShot();
 
@@ -1238,7 +1238,7 @@ void ThreadOpenConnections()
         int64_t nANow = GetAdjustedTime();
 
         int nTries = 0;
-        while (true)
+        while (!ShutdownRequested())
         {
             // use an nUnkBias between 10 (no outgoing connections) and 90 (8 outgoing connections)
             CAddress addr = addrman.Select(10 + min(nOutbound,8)*10);
@@ -1282,7 +1282,7 @@ void ThreadOpenAddedConnections()
     }
 
     if (HaveNameProxy()) {
-        while(true) {
+        while(!ShutdownRequested()) {
             list<string> lAddresses(0);
             {
                 LOCK(cs_vAddedNodes);
